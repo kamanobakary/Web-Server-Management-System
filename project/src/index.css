@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Mobile browser fixes ───────────────────────────────────────────────────── */
+
+/* Neutralise le délai de 300 ms au clic sur Android/iOS anciens */
+* {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: pan-y;
+}
+
+button,
+[role="button"],
+a {
+  touch-action: manipulation;
+}
+
+/* Hauteur viewport iOS Safari (barre d'adresse dynamique) */
+:root {
+  --vh: 1vh;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  /* fallback puis override */
+  height: 100dvh;
+  margin: 0;
+  padding: 0;
+  overscroll-behavior: none;
+}
+
+/* Empêche le rebond/overscroll iOS de faire "défiler" la page derrière le drawer */
+body.sidebar-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+/* Transitions matérielles GPU – évite les saccades sur Android bas de gamme */
+.sidebar-drawer {
+  will-change: transform;
+  -webkit-overflow-scrolling: touch;
+}
+
+.sidebar-backdrop {
+  will-change: opacity;
+}
+
+/* Assure que les inputs ne provoquent pas de zoom involontaire sur iOS Safari */
+input,
+select,
+textarea {
+  font-size: max(16px, 1em);
+}
+
+/* Override pour les inputs de filtres/recherche qui doivent rester petits visuellement */
+input[data-no-zoom="true"] {
+  font-size: 14px;
+}
